@@ -1,4 +1,5 @@
 const { storageModel } = require("../Models");
+const PUBLIC_URL = process.env.PUBLIC_URL;
 
 /**
  * Obtener una lista
@@ -28,7 +29,13 @@ const getItem = async(req, res) => {}
 const createItem = async(req, res) => {
 
     const { body, file } = req;
-    const data = await storageModel.create(body);
+
+    const fileData = {
+        filename: file.filename,
+        url: `${PUBLIC_URL}/${file.filename}`
+    }
+
+    const data = await storageModel.create(fileData);
 
     res.status(201);
     res.send(data);
